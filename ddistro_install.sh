@@ -21,7 +21,7 @@ source /home/dwemer/python-tts/bin/activate
 ./conf.sh
 
 echo 
-echo "This will start server to get model downloaded"
+echo "This will start CHIM XTTS to download the selected model"
 echo "Wait for the message 'Uvicorn running on http://0.0.0.0:8020 (Press CTRL+C to quit)'"
 echo "Then close this window. Press ENTER to continue"
 read
@@ -30,5 +30,5 @@ echo "please wait...."
 
 python -m xtts_api_server --listen
 
-echo "Press enter"
+echo "Press Enter"
 read
