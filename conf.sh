@@ -1,14 +1,15 @@
 #!/bin/bash
 clear
 cat << EOF
-XTTSV2 FASTAPI 
+CHIM XTTS
 
-This will install XTTS. This is a high quality TTS service that works with Skyrim voices. 
+This will install CHIM XTTS. This is a high quality TTS service that works with Skyrim voices. 
 
-You can also generate your own voices!
+You can also generate your own voices.
 
 However it will require around 4GB of VRAM! 
 
+Options:
 deepseed = Uses more VRAM but faster
 lowvram = Uses less VRAM but slower
 regular = Middle ground of both options above
