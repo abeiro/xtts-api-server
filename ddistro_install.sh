@@ -39,4 +39,4 @@ echo "please wait...."
 
 python -m xtts_api_server --listen
 
-echo "Press Enter
+echo "Press Enter"
