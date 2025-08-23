@@ -17,8 +17,9 @@ fi
 python3 -m pip install --upgrade pip wheel ninja virtualenv
 pip install setuptools==68.1.2
 pip install -r requirements.txt
-pip uninstall -y torch torchaudio
-pip install --pre -U torch torchaudio --index-url "$torch_url"
+# Ensure fresh installs of PyTorch stack including TorchCodec required by recent torchaudio
+pip uninstall -y torch torchaudio torchcodec
+pip install --pre -U torch torchaudio torchcodec --index-url "$torch_url"
 #pip install xtts-api-server #Fails
 
 sed -i 's/checkpoint = load_fsspec(model_path, map_location=torch.device("cpu"))\["model"\]/checkpoint = load_fsspec(model_path, map_location=torch.device("cpu"), weights_only=False)["model"]/' /home/dwemer/python-tts/lib/python3.11/site-packages/TTS/tts/models/xtts.py
