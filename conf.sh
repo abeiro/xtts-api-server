@@ -61,5 +61,7 @@ echo "You selected: $selected_file"
 ln -sf $selected_file /home/dwemer/xtts-api-server/start.sh
 
 
+# Ensure all start scripts are executable
+chmod +x /home/dwemer/xtts-api-server/start-*.sh 2>/dev/null || true
 
 
