@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# Add CUDA to PATH if the directory exists (matches deepspeed launcher)
-if [ -d "/usr/local/cuda-12.8/bin" ]; then
-  export PATH="/usr/local/cuda-12.8/bin:$PATH"
+# Add CUDA to PATH (detect highest installed cuda-*/bin)
+cuda_bin=""
+if [ -d "/usr/local" ]; then
+  cuda_bin=$(ls -d /usr/local/cuda-*/bin 2>/dev/null | sort -V | tail -n1)
+fi
+if [ -n "$cuda_bin" ] && [ -d "$cuda_bin" ]; then
+  export PATH="$cuda_bin:$PATH"
 fi
 
 cd /home/dwemer/xtts-api-server/
