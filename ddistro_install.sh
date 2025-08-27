@@ -13,25 +13,34 @@ if [[ "$gpu_answer" =~ ^[Yy][Ee][Ss]$ || "$gpu_answer" =~ ^[Yy]$ ]]; then
     torch_url="https://download.pytorch.org/whl/${cu_tag}"
     torch_ver="2.2.2"
     torchaudio_ver="2.2.2"
+    python3 -m pip install --upgrade pip wheel ninja virtualenv
+    pip install setuptools==68.1.2
+    # Install app requirements without auto-pulling torch/torchaudio from deps
+    pip install --no-deps -r requirements.txt
+    # Pin to stable, CUDA-tagged PyTorch/Torchaudio that do not require TorchCodec
+    pip cache purge || true
+    pip uninstall -y torch torchaudio torchcodec torchvision || true
+    pip install --no-deps --no-cache-dir --index-url "$torch_url" "torch==${torch_ver}+${cu_tag}" "torchaudio==${torchaudio_ver}+${cu_tag}"
+    pip check || true
+    # Ensure fallback audio loader is available
+    pip install --no-cache-dir soundfile
 else
-    cu_tag="cu124"
+    cu_tag="cu128"
     torch_url="https://download.pytorch.org/whl/${cu_tag}"
-    torch_ver="2.4.0"
-    torchaudio_ver="2.4.0"
-fi
 
-python3 -m pip install --upgrade pip wheel ninja virtualenv
-pip install setuptools==68.1.2
-# Install app requirements without auto-pulling torch/torchaudio from deps
-pip install --no-deps -r requirements.txt
-# Pin to stable, CUDA-tagged PyTorch/Torchaudio that do not require TorchCodec
-pip cache purge || true
-pip uninstall -y torch torchaudio torchcodec torchvision || true
-pip install --no-deps --no-cache-dir --index-url "$torch_url" "torch==${torch_ver}+${cu_tag}" "torchaudio==${torchaudio_ver}+${cu_tag}"
-pip check || true
-# Ensure fallback audio loader is available
-pip install --no-cache-dir soundfile
-#pip install xtts-api-server #Fails
+    python3 -m pip install --upgrade pip wheel ninja virtualenv
+    pip install setuptools==68.1.2
+    # Install app requirements without auto-pulling torch/torchaudio from deps
+    pip install --no-deps -r requirements.txt
+    # Pin to stable, CUDA-tagged PyTorch/Torchaudio that do not require TorchCodec
+    pip cache purge || true
+    pip uninstall -y torch torchaudio torchcodec torchvision || true
+    pip install --index-url "$torch_url" torch torchaudio torchcodec torchvision 
+    pip check || true
+    # Ensure fallback audio loader is available
+    pip install --no-cache-dir soundfile
+    #pip install xtts-api-server #Fails
+fi
 
 sed -i 's/checkpoint = load_fsspec(model_path, map_location=torch.device("cpu"))\["model"\]/checkpoint = load_fsspec(model_path, map_location=torch.device("cpu"), weights_only=False)["model"]/' /home/dwemer/python-tts/lib/python3.11/site-packages/TTS/tts/models/xtts.py
 
