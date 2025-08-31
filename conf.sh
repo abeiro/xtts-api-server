@@ -8,7 +8,7 @@ You can also generate your own voices.
 However it will require around 4GB of VRAM! 
 
 Options:
-* deepseed = Uses more VRAM but it isfaster. Does not work with 50xx series GPUs.
+* deepseed = Uses more VRAM but it is faster. Does not work with 50xx series GPUs.
 * lowvram = Uses less VRAM but it is slower. 
 * regular = Middle ground of both options above. RECOMMENDED!
 
