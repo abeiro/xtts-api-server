@@ -35,7 +35,8 @@ else
     # Pin to stable, CUDA-tagged PyTorch/Torchaudio that do not require TorchCodec
     pip cache purge || true
     pip uninstall -y torch torchaudio torchcodec torchvision || true
-    pip install --index-url "$torch_url" torch torchaudio torchcodec torchvision 
+    #pip install --index-url "$torch_url" torch torchaudio torchcodec torchvision 
+    pip install torch==2.7.0+cu128 torchaudio==2.7.0+cu128 torchvision==0.22.0+cu128 --index-url=https://download.pytorch.org/whl/
     pip check || true
     # Ensure fallback audio loader is available
     pip install --no-cache-dir soundfile
