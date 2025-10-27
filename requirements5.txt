@@ -30,7 +30,7 @@ cymem==2.0.10
 Cython==3.0.11
 dateparser==1.1.8
 decorator==5.1.1
-deepspeed==0.16.2
+deepspeed==0.18.1
 distlib==0.4.0
 docopt==0.6.2
 einops==0.8.0
