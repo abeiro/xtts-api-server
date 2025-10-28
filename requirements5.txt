@@ -174,4 +174,7 @@ torchaudio==2.9.0+cu130
 torchcodec==0.8.0
 torchvision==0.24.0+cu130
 nvidia-npp==13.0.1.2
+nvidia-cuda-nvcc
+nvidia-cuda-profiler-api-cu13
+nvidia-cuda-profiler-api
 
