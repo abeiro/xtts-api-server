@@ -41,6 +41,16 @@ else
 	    pip check || true
 	    # Ensure fallback audio loader is available
 	    pip install --no-cache-dir soundfile
+        # Fix symlinks
+		LIBDIR=$(python3 -c 'import site; print(site.getsitepackages()[0])')/nvidia/cu13/lib
+	    for f in "$LIBDIR"/lib*.so.*; do
+    	    base=$(basename "$f")
+        	link="${f%%.so.*}.so"
+            if [ ! -e "$link" ]; then
+				echo "Creating symlink: $(basename "$link") -> $base"
+				ln -s "$base" "$link"
+			fi
+		done		
 	    #pip install xtts-api-server #Fails
 
     else
@@ -80,8 +90,16 @@ read
 
 echo "please wait...."
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/dwemer/python-tts/lib/python3.11/site-packages/nvidia/cu13/lib/
+# Add CUDA to PATH if the directory exists
+if [ -d "/home/dwemer/python-tts/lib/python3.11/site-packages/nvidia/cu13/lib/" ];
+then
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/dwemer/python-tts/lib/python3.11/site-packages/nvidia/cu13/lib/
+  export PATH=/home/dwemer/python-tts/lib/python3.11/site-packages/nvidia/cu13/bin:$PATH
+  export CUDA_HOME=/home/dwemer/python-tts/lib/python3.11/site-packages/nvidia/cu13
+fi
 
-python -m xtts_api_server --listen
+readlink start.sh | grep -q '/home/dwemer/xtts-api-server/start-deepspeed.sh' && export DEEPSPEED="--deepspeed" ||  export DEEPSPEED=""
+
+python -m xtts_api_server --listen $DEEPSPEED
 
 echo "Press Enter"
