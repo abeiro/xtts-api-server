@@ -5,7 +5,8 @@ python3 -m venv /home/dwemer/python-tts
 source /home/dwemer/python-tts/bin/activate
 
 echo "This will take a while so please wait."
-
+# Clean previous deepspeed stuff
+rm /home/dwemer/.cache/torch_extensions/py311_cu130/transformer_inference/*
 # Ask user about GPU
 read -p "Are you using a GT10XX series GPU? (yes/no): " gpu_answer
 if [[ "$gpu_answer" =~ ^[Yy][Ee][Ss]$ || "$gpu_answer" =~ ^[Yy]$ ]]; then
