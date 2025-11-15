@@ -4,6 +4,14 @@ cd /home/dwemer/xtts-api-server
 python3 -m venv /home/dwemer/python-tts
 source /home/dwemer/python-tts/bin/activate
 
+
+PIDS=$(lsof -ti:8020)
+if [ -n "$PIDS" ]; then
+    echo "Killing processes listening on port 8020: $PIDS"
+    kill -9 $PIDS
+fi
+
+
 echo "This will take a while so please wait."
 
 read -p "Do you want to perform a clean install? (yes/no): " clean_install
