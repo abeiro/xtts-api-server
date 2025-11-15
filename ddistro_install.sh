@@ -5,6 +5,12 @@ python3 -m venv /home/dwemer/python-tts
 source /home/dwemer/python-tts/bin/activate
 
 echo "This will take a while so please wait."
+
+read -p "Do you want to perform a clean install? (yes/no): " clean_install
+if [[ "$clean_install" =~ ^[Yy][Ee][Ss]$ || "$clean_install" =~ ^[Yy]$ ]]; then
+    rm -fr /home/dwemer/python-tts/*
+fi
+
 # Clean previous deepspeed stuff
 rm /home/dwemer/.cache/torch_extensions/py311_cu130/transformer_inference/*
 # Ask user about GPU
