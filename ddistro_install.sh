@@ -1,5 +1,11 @@
 #!/bin/bash
 
+echo "=== CHIM XTTS Installation ==="
+echo ""
+echo "NOTE: CHIM XTTS and Chatterbox use the same port (8020)."
+echo "      Only one can be enabled at a time."
+echo ""
+
 cd /home/dwemer/xtts-api-server
 python3 -m venv /home/dwemer/python-tts
 source /home/dwemer/python-tts/bin/activate
