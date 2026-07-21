@@ -2,8 +2,8 @@
 
 echo "=== CHIM XTTS Installation ==="
 echo ""
-echo "NOTE: CHIM XTTS and Chatterbox use the same port (8020)."
-echo "      Only one can be enabled at a time."
+echo "XTTS keeps its dedicated DwemerDistro port (8020)."
+echo "Chatterbox uses 8023 and Python PocketTTS uses 8024."
 echo ""
 
 cd /home/dwemer/xtts-api-server
