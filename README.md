@@ -121,7 +121,7 @@ options:
   --stream-play-sync Additional flag for streaming mod that allows you to play all audio one at a time without interruption
 ```
 
-You can specify the path to the file as text, then the path counts and the file will be voiced
+Text sent to the HTTP API is always voiced literally, even if it looks like a file path. Local Python callers can voice a `.txt` file by passing its path as `text` together with `allow_text_file=True` to `TTSWrapper.process_tts_to_file`
 
 You can load your own model, for this you need to create a folder in models and load the model with configs, note in the folder should be 3 files `config.json` `vocab.json` `model.pth`
 
