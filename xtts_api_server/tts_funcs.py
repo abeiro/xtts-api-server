@@ -588,7 +588,9 @@ class TTSWrapper:
 
 
     # MAIN FUNC
-    def process_tts_to_file(self, text, speaker_name_or_path, language, file_name_or_path="out.wav", stream=False):
+    def process_tts_to_file(self, text, speaker_name_or_path, language, file_name_or_path="out.wav", stream=False, allow_text_file=False):
+        # 'text' is synthesized literally unless a local caller opts in with
+        # allow_text_file=True; HTTP routes must never opt in.
         try:
             speaker_wav = self.get_speaker_wav(speaker_name_or_path)
             # Determine output path based on whether a full path or a file name was provided
@@ -599,8 +601,8 @@ class TTSWrapper:
                 # Only a filename was provided; prepend with output folder.
                 output_file = os.path.join(self.output_folder, file_name_or_path)
 
-            # Check if 'text' is a valid path to a '.txt' file.
-            if os.path.isfile(text) and text.lower().endswith('.txt'):
+            # Opt-in only: read 'text' as a path to a '.txt' file.
+            if allow_text_file and os.path.isfile(text) and text.lower().endswith('.txt'):
                 with open(text, 'r', encoding='utf-8') as f:
                     text = f.read()
 
